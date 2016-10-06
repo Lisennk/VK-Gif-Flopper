@@ -1,0 +1,6 @@
+{
+    "require": {
+        "vladkens/vk": "^0.1.9",
+        "guzzlehttp/guzzle": "^6.2"
+    }
+}

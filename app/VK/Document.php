@@ -1,7 +1,8 @@
 <?php
 
-namespace Lisennk\GifFlopper;
+namespace Lisennk\GifFlopper\VK;
 
+use Lisennk\GifFlopper\Interfaces\FileInterface;
 use VK\VK;
 use GuzzleHttp\Client;
 
@@ -12,21 +13,23 @@ class Document
     protected $name;
     protected $content;
 
-    public function __construct(string $name, string $content, VK $api)
+    public function __construct(VK $api, FileInterface $file)
     {
         $this->vk = $api;
         $this->client = new Client();
 
-        $this->name = $name;
-        $this->content = $content;
-
-        $this->save();
+        $this->content = $file->getBlob();
     }
 
-    protected function save(): string
+    public function name(string $filename): string
+    {
+        return $this->save($filename);
+    }
+
+    protected function save(string $filename): string
     {
         $uploadUrl = $this->getUploadUrl();
-        $file = $this->uploadFile($uploadUrl, $this->name, $this->content);
+        $file = $this->uploadFile($uploadUrl, $filename, $this->content);
         return $this->saveFile($file);
     }
 

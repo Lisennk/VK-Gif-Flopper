@@ -1,6 +1,6 @@
 <?php
 
-namespace Lisennk\GifFlopper\Interfaces\FileInterface;
+namespace Lisennk\GifFlopper\Interfaces;
 
 /**
  * Interface FileInterface

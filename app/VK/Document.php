@@ -13,20 +13,15 @@ class Document
     protected $name;
     protected $content;
 
-    public function __construct(VK $api, FileInterface $file)
+    public function __construct(string $filename, FileInterface $file, VK $api)
     {
         $this->vk = $api;
         $this->client = new Client();
-
         $this->content = $file->getBlob();
+        $this->saveAs($filename);
     }
 
-    public function name(string $filename): string
-    {
-        return $this->save($filename);
-    }
-
-    protected function save(string $filename): string
+    protected function saveAs(string $filename): string
     {
         $uploadUrl = $this->getUploadUrl();
         $file = $this->uploadFile($uploadUrl, $filename, $this->content);

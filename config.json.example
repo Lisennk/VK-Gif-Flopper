@@ -1,5 +1,5 @@
 {
-  "app_id": " ",
-  "api_secret": " ",
-  "access_token": " "
+  "app_id": "Your App ID",
+  "api_secret": "Your API Secret",
+  "access_token": "Your Access Token With Doc Scope"
 }

@@ -16,7 +16,7 @@ class ApiFactory
      * @param string $configPath
      * @return VK
      */
-    public static function makeWith(string $configPath)
+    public static function makeWith(string $configPath): VK
     {
         $config = json_decode(file_get_contents($configPath));
         return new VK($config->app_id, $config->api_secret, $config->access_token);

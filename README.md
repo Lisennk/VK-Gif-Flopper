@@ -14,8 +14,9 @@ Tool that flop GIF by it's URL and upload flopped image into your "Documents" on
 ```
 git clone https://github.com/Lisennk/VK-Gif-Flopper.git
 ```
-2. Go to directory with repository and make configuration file 
+2. Go to directory with repository, install dependencies and make configuration file 
 ```
+composer install
 cp config.json.example config.json
 ```
 Now open `config.json` and fill your VK App ID, Access Token and App Secret Code.

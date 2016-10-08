@@ -1,6 +1,15 @@
 {
+    "name": "lisennk/gifflopper",
+    "description": "Flop VK Gif",
+    "license": "MIT",
+    "type": "project",
     "require": {
         "vladkens/vk": "^0.1.9",
         "guzzlehttp/guzzle": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lisennk\\GifFlopper\\": "app/"
+        }
     }
 }

@@ -10,12 +10,12 @@ use GuzzleHttp\Client;
  * Class Document
  * @package Lisennk\GifFlopper\VK
  */
-class Document
+class Documents
 {
     /**
      * @var VK
      */
-    protected $api;
+    protected $vk;
 
     /**
      * @var \GuzzleHttp\Client
@@ -23,36 +23,65 @@ class Document
     protected $client;
 
     /**
-     * File blob
-     *
-     * @var string
-     */
-    protected $blob;
-
-    /**
      * Document constructor.
-     * @param string $filename
-     * @param FileInterface $file
      * @param VK $api
      */
-    public function __construct(string $filename, FileInterface $file, VK $api)
+    public function __construct(VK $api)
     {
-        $this->api = $api;
+        $this->vk = $api;
         $this->client = new Client();
-        $this->blob = $file->getBlob();
-        $this->saveAs($filename);
+    }
+
+    /**
+     * Returns info about document by its URL
+     *
+     * @see https://vk.com/dev/docs.getById
+     * @param string $url
+     * @return array
+     */
+    public function get(string $url): array
+    {
+        $id = $this->getDocIdFromString($url);
+        return $id ? $this->getById($id) : [];
+    }
+
+
+    /**
+     * Returns info about document by its ID
+     *
+     * @see https://vk.com/dev/docs.getById
+     * @param string $id
+     * @return array
+     */
+    public function getById(string $id): array
+    {
+        return $this->vk->api('docs.getById', [
+            'docs' => $id
+        ])['response'][0];
+    }
+
+    /**
+     * Returns VK Doc ID form any string
+     *
+     * @param string $string For example, "https://vk.com/doc237223974_438108346"
+     * @return string For example, "237223974_438108346" or "" if there is no ID in the string
+     */
+    protected function getDocIdFromString(string $string): string
+    {
+        return preg_match("/(\d+)_(\d+)/i", $string, $matches) ? $matches[0] : '';
     }
 
     /**
      * Save doc on vk.com as $filename
      *
      * @param string $filename
+     * @param FileInterface $file
      * @return string Uploaded Doc Url
      */
-    protected function saveAs(string $filename): string
+    public function add(string $filename, FileInterface $file): string
     {
         $uploadUrl = $this->getUploadUrl();
-        $file = $this->uploadFile($uploadUrl, $filename, $this->blob);
+        $file = $this->uploadFile($uploadUrl, $filename, $file->getBlob());
         return $this->saveFile($file);
     }
 
@@ -61,7 +90,7 @@ class Document
      */
     protected function getUploadUrl(): string
     {
-        return $this->api->api('docs.getUploadServer')['response']['upload_url'];
+        return $this->vk->api('docs.getUploadServer')['response']['upload_url'];
     }
 
     /**
@@ -96,7 +125,7 @@ class Document
      */
     protected function saveFile($file): string
     {
-        return $this->api->api('docs.save', [
+        return $this->vk->api('docs.save', [
             'file' => $file,
         ])['response'][0]['url'];
     }

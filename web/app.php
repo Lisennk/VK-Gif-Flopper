@@ -3,12 +3,21 @@
 require_once('../vendor/autoload.php');
 
 use Lisennk\GifFlopper\Gif;
-use Lisennk\GifFlopper\VK\Document;
+use Lisennk\GifFlopper\VK\Documents;
 use Lisennk\GifFlopper\VK\ApiFactory;
 
-$api = ApiFactory::makeWith('../config.json');
+try {
+    $api = ApiFactory::makeWith('../config.json');
+    $documents = new Documents($api);
 
-$gif = new Gif($_GET['url']);
-$gif->flop();
+    $gifDocument = $documents->get($_GET['url']);
 
-new Document('dev-null.gif', $gif, $api);
+    $gif = new Gif($gifDocument['url']);
+    $gif->flop();
+
+    $documents->add('dev-null.gif', $gif);
+
+    echo 'Success';
+} catch (\Exception $e) {
+    echo 'Error: ' . $e->getMessage();
+}

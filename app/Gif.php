@@ -12,11 +12,14 @@ use Imagick;
 class Gif implements FileInterface
 {
     /**
-     * Image
-     *
-     * @var Imagick
+     * @var string Image blob
      */
     protected $gif;
+
+    /**
+     * @var string URL Path to image
+     */
+    protected $url;
 
     /**
      * Gif constructor.
@@ -24,7 +27,7 @@ class Gif implements FileInterface
      */
     public function __construct(string $url)
     {
-        $this->gif = (new Imagick($url))->coalesceImages();
+        $this->url = $url;
     }
 
     /**
@@ -34,10 +37,7 @@ class Gif implements FileInterface
      */
     public function flop(): self
     {
-        foreach ($this->gif as $frame) {
-            $frame->flopImage();
-        }
-
+        system('convert ' . $this->url . ' -flop -', $this->gif);
         return $this;
     }
 
@@ -48,7 +48,6 @@ class Gif implements FileInterface
      */
     public function getBlob(): string
     {
-        $this->gif->deconstructImages();
-        return $this->gif->getImagesBlob();
+        return $this->gif;
     }
 }

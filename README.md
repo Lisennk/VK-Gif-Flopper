@@ -10,11 +10,11 @@ Tool that flop GIF by it's URL and upload flopped image into your "Documents" on
 
 ## :ocean: How to install
 
-1. Clone repo
+*For the first*, clone repo
 ```
 git clone https://github.com/Lisennk/VK-Gif-Flopper.git
 ```
-2. Go to directory with repository, install dependencies and make configuration file 
+*For the second*, go to directory with repository, install dependencies and make configuration file 
 ```
 composer install
 cp config.json.example config.json

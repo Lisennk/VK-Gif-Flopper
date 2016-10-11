@@ -3,7 +3,6 @@
 namespace Lisennk\GifFlopper;
 
 use Lisennk\GifFlopper\Interfaces\FileInterface;
-use Imagick;
 
 /**
  * Class Gif
@@ -12,14 +11,17 @@ use Imagick;
 class Gif implements FileInterface
 {
     /**
-     * @var string Image blob
-     */
-    protected $gif;
-
-    /**
      * @var string URL Path to image
      */
     protected $url;
+
+    /**
+     * This class uses Linux tools to perform download and flopping,
+     * so this array contain list of commands that will be piped and executed
+     *
+     * @var array
+     */
+    protected $commands;
 
     /**
      * Gif constructor.
@@ -27,7 +29,21 @@ class Gif implements FileInterface
      */
     public function __construct(string $url)
     {
-        $this->url = $url;
+        $this->download($url);
+    }
+
+    /**
+     * Downloads file from URL, following redirects and fake user agent
+     *
+     * @param string $url
+     * @return Gif
+     */
+    public function download(string $url): self
+    {
+        $ua  = 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5';
+        $this->commands[] = 'curl -s -L -A "' . $ua . '" "'.$url.'"';
+
+        return $this;
     }
 
     /**
@@ -37,7 +53,8 @@ class Gif implements FileInterface
      */
     public function flop(): self
     {
-        system('convert ' . $this->url . ' -flop -', $this->gif);
+        $this->commands[] = 'convert gif:- -flop gif:-';
+
         return $this;
     }
 
@@ -48,6 +65,17 @@ class Gif implements FileInterface
      */
     public function getBlob(): string
     {
-        return $this->gif;
+        $command = $this->getCommand();
+        return shell_exec($command);
+    }
+
+    /**
+     * Returns piped shell commands
+     *
+     * @return string
+     */
+    protected function getCommand(): string
+    {
+        return implode('|', $this->commands);
     }
 }

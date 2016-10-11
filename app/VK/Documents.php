@@ -99,11 +99,12 @@ class Documents
      * @param string $url
      * @param string $filename
      * @param string $content
+     * @throws \Exception
      * @return string
      */
     protected function uploadFile(string $url, string $filename, string $content): string
     {
-        $response = $this->client->request('POST', $url, [
+        $response = json_decode($this->client->request('POST', $url, [
             'multipart' => [
                 [
                     'Content-type' => 'multipart/form-data',
@@ -112,9 +113,10 @@ class Documents
                     'filename' => $filename
                 ],
             ]
-        ])->getBody()->getContents();
+        ])->getBody()->getContents());
 
-        return json_decode($response)->file;
+        if ($response->error) throw new \Exception($response->error);
+        return $response->file;
     }
 
     /**

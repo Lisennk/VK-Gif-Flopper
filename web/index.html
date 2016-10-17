@@ -1,17 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Gif Flopper</title>
-</head>
-<body>
-    <form method="GET" action="app.php" style="text-align: center;">
-        <p>
-            <input name="url" type="url" placeholder="Paste Gif Url" value="">
-        </p>
-        <p>
-            <input name="submit" type="submit" value="Flop">
-        </p>
-    </form>
-</body>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VK GIF FLOPPER</title>
+    <link rel="stylesheet" href="css/styles.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.min.js"></script>
+    <!--if IEscript(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js')
+    -->
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="title">VK GIF FLOPPER</div>
+        <input id="url" autofocus name="url" onclick="this.select();" type="url" placeholder="Paste Gif Url">
+        <input id="submit" name="submit" type="submit" value="Flop">
+        <p class="copyright">Made with ♥ by <a href='https://vk.com/taras_serevann' target='_blank'>Taras Serevan</a><br>Designed by <a href='https://vk.com/sezyara' target='_blank'>Roman Sultanov</a></p>
+      </div>
+    </div>
+  </body>
 </html>

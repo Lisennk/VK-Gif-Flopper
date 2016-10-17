@@ -1,0 +1,76 @@
+@import "http://webfonts.ru/import/noto.css"
+
+$accent: #1abc9c
+
+*
+	border: 0
+	box-sizing: border-box
+	margin: 0
+	outline: 0
+	padding: 0
+
+html, body
+	background-color: #ededed
+	color: #5a5a5a
+	font:
+		family: 'Noto Sans', sans-serif
+		size: 1em
+		weight: 400
+	height: 0 auto
+	width: 100%
+
+.wrap
+	align-items: center
+	display: flex
+	flex-direction: column
+	justify-content: center
+	.card
+		background-color: white
+		border-radius: 0.25em
+		box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.15), 0 0.25em 0.5em rgba(0, 0, 0, 0.3)
+		display: block
+		margin: 0.3em 0
+		position: absolute
+		top: calc(50% - 7.6875em)
+		width: 15.5em
+		.copyright
+			font-size: 0.8em
+			margin: -1em 0.3em 1em 0.3em
+			opacity: 0.25
+			text-align: center
+			a
+				&:hover, &:focus
+					color: $accent
+		.title
+			box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.1), 0 0.25em 0.5em rgba(0, 0, 0, 0.15)
+			color: $accent
+			font-size: 1.1em
+			padding: 1em 1.5em
+		input
+			display: block
+			margin: 2em 1.5em
+			padding: 0.8em 1.5em
+			width: 15.5em
+		input[type='url']
+			border-bottom: 0.125em solid $accent
+			margin:
+				left: auto
+				right: auto
+			opacity: 0.8
+			transition: 0.5s
+			&:hover, &:focus
+				opacity: 1
+		input[type='submit']
+			background-color: white
+			border: 0.125em solid $accent
+				radius: 0.25em
+			color: $accent
+			cursor: pointer
+			margin:
+				left: auto
+				right: auto
+			text-transform: uppercase
+			transition: 0.5s
+			&:hover, &:focus
+				background-color: $accent
+				color: white
